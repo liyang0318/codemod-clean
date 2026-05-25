@@ -5,9 +5,9 @@
   "main": "./bin/cli.js",
   "scripts": {
     "release": "standard-version",
-    "release:patch": "standard-version --patch",
-    "release:minor": "standard-version --minor",
-    "release:major": "standard-version --major",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
