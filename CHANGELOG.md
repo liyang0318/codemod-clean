@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/liyang0318/codemod-clean/compare/v1.1.3...v1.1.4) (2026-05-25)
+
+
+### Features
+
+* 新增发布脚本 ([4c8f0ca](https://github.com/liyang0318/codemod-clean/commit/4c8f0ca9a7900a10950d1fe015b1623d625d6075))
+
 ### [1.1.3](https://github.com/liyang0318/codemod-clean/compare/v1.1.2...v1.1.3) (2026-05-25)
 
 ### [1.1.2](https://github.com/liyang0318/codemod-clean/compare/v1.1.1...v1.1.2) (2026-05-25)
