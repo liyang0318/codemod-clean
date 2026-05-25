@@ -24,8 +24,6 @@
     "ast",
     "babel"
   ],
-  "author": "liyang",
-  "license": "MIT",
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
     "@babel/generator": "^7.29.1",
@@ -40,5 +38,11 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
-  }
+  },
+  "homepage": "https://github.com/liyang0318/codemod-clean#readme",
+  "bugs": {
+    "url": "https://github.com/liyang0318/codemod-clean/issues"
+  },
+  "author": "liyang",
+  "license": "ISC"
 }
