@@ -1,0 +1,44 @@
+{
+  "name": "codemod-clean",
+  "version": "1.1.0",
+  "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
+  "main": "./bin/cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "codemod-clean": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "codemod",
+    "clean",
+    "console",
+    "unused-variables",
+    "unused-imports",
+    "ast",
+    "babel"
+  ],
+  "author": "liyang",
+  "license": "MIT",
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "@babel/generator": "^7.29.1",
+    "@babel/parser": "^7.29.3",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
+    "chalk": "^4.1.2",
+    "commander": "^14.0.3",
+    "fs-extra": "^11.3.5",
+    "globby": "^16.2.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
