@@ -1,3 +1,15 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### 1.1.1 (2026-05-25)
+
+
+### Features
+
+* add license ([8846b62](https://github.com/liyang0318/codemod-clean/commit/8846b6261c7b2c136c2c972fa2c7670a2ac769f5))
+* add standard-version ([6669765](https://github.com/liyang0318/codemod-clean/commit/6669765a756176353a9e3279b24fbca91d64f3c4))
+
 # Change Log
 
 ## 🚀 [1.1.1] - 2026-05-25
