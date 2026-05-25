@@ -1,0 +1,13 @@
+# .npmignore 优先级高于 files
+# 会排除以下文件/目录
+node_modules
+.git
+.github
+.vscode
+test
+__tests__
+*.test.js
+*.spec.js
+coverage
+.env
+.DS_Store
