@@ -4,6 +4,10 @@
   "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
   "main": "./bin/cli.js",
   "scripts": {
+    "release": "standard-version",
+    "release:patch": "standard-version --patch",
+    "release:minor": "standard-version --minor",
+    "release:major": "standard-version --major",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -44,5 +48,8 @@
     "url": "https://github.com/liyang0318/codemod-clean/issues"
   },
   "author": "liyang",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  }
 }
