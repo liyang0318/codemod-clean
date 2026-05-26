@@ -8,7 +8,7 @@ async function scan(target) {
 
   if (!fsExtra.existsSync(abs)) {
     console.log(chalk.red("❌ 错误:"), chalk.white(`路径 "${target}" 不存在`));
-    console.log(chalk.yellow("🔔 提示:"), chalk.gray("请检查路径是否正确"));
+    console.log(chalk.yellow("🔔 提示:"), chalk.dim("请检查路径是否正确"));
 
     process.exit(1);
   }
