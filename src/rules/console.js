@@ -28,6 +28,7 @@ function removeConsole(ast, options = {}) {
         reporter.collect("console", path.node, options);
 
         path.parentPath.remove();
+        options.modified = true;
       }
     },
   });
