@@ -22,7 +22,7 @@ function updateVersion(version) {
 }
 
 async function hasChanges() {
-  const { stdout } = await capture("git", ["status", "--porcelain"]);
+  const { stdout } = await run("git", ["status", "--porcelain"]);
   return stdout.trim().length > 0;
 }
 
