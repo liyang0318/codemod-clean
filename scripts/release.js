@@ -22,9 +22,13 @@ function updateVersion(version) {
 }
 
 async function commitVersion(version) {
-  const { stdout } = await run("git", ["diff"]);
+  const { stdout } = await run("git", ["status", "--porcelain"], {
+    stdio: "pipe",
+  });
 
-  if (!stdout) {
+  const hasChanges = stdout.trim().length > 0;
+
+  if (!hasChanges) {
     console.log(chalk.red("🔔 提示: 未发现可提交的变更"));
     process.exit(0);
   }
