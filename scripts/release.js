@@ -18,17 +18,18 @@ const inc = (type) => semver.inc(currentVersion, type);
 
 function updateVersion(version) {
   pkg.version = version;
-  fsExtra.writeFileSync("./package.json", JSON.stringify(pkg, null, 2));
+  fsExtra.writeFileSync("./package.json", JSON.stringify(pkg, null, 2) + "\n");
+}
+
+async function hasChanges() {
+  const { stdout } = await capture("git", ["status", "--porcelain"]);
+  return stdout.trim().length > 0;
 }
 
 async function commitVersion(version) {
-  const { stdout } = await run("git", ["status", "--porcelain"], {
-    stdio: "pipe",
-  });
+  const dirty = await hasChanges();
 
-  const hasChanges = stdout.trim().length > 0;
-
-  if (!hasChanges) {
+  if (!dirty) {
     console.log(chalk.red("🔔 提示: 未发现可提交的变更"));
     process.exit(0);
   }
