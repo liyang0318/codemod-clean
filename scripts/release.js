@@ -25,9 +25,8 @@ async function commitVersion(version) {
   const { stdout } = await run("git", ["diff"]);
 
   if (!stdout) {
-    console.log(chalk.red("🔔 提示:"), chalk.gray("未发现可提交的变更"));
-
-    return;
+    console.log(chalk.red("🔔 提示: 未发现可提交的变更"));
+    process.exit(0);
   }
 
   await run("git", ["add", "./package.json"]);
@@ -59,24 +58,25 @@ async function release() {
 
       await commitVersion(customVersion);
     } else {
-      await execaCommand(`pnpm release:${versionType}`);
+      await execaCommand(`pnpm version:${versionType}`);
     }
   } else {
     if (!semver.valid(targetVersion)) {
-      throw new Error(`invalid target version: ${targetVersion}`);
+      console.log(chalk.red("🔔 提示: 无效的目标版本号"));
+      process.exit(1);
     }
 
     updateVersion(targetVersion);
     await commitVersion(targetVersion);
   }
 
-  console.log(chalk.cyan("🔔 提示:"), chalk.gray("正在推送代码"));
+  console.log(chalk.cyan("🔔 提示: 正在推送代码..."));
   await run("git", ["push"]);
 
-  console.log(chalk.cyan("🔔 提示:"), chalk.gray("正在发布"));
+  console.log(chalk.cyan("🔔 提示: 正在发布..."));
   await run("npm", ["publish"]);
 
-  console.log(chalk.green("🔔 提示:"), chalk.gray("发布完成"));
+  console.log(chalk.green("🚀 提示: 发布完成！"));
 }
 
 release();
