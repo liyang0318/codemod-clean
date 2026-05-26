@@ -1,10 +1,8 @@
 const fsExtra = require("fs-extra");
 const chalk = require("chalk");
-const generate = require("@babel/generator").default;
-const parse = require("../utils/parse.js");
-const removeConsole = require("../rules/console.js");
-const removeUnusedVar = require("../rules/unusedVar.js");
-const removeUnusedImport = require("../rules/unusedImport.js");
+const parse = require("../parse/index.js");
+const transform = require("../transform/index.js");
+const generator = require("../generator/index.js");
 const Reporter = require("./reporter.js");
 const scan = require("./scanner.js");
 
@@ -12,7 +10,7 @@ async function run(target, mode) {
   const files = await scan(target);
 
   if (!files?.length) {
-    console.log(chalk.yellow("🔔 提示:"), chalk.gray("未发现可处理的文件"));
+    console.log(chalk.yellow("🔔 提示:"), chalk.dim("未发现可处理的文件"));
     process.exit(0);
   }
 
@@ -26,24 +24,17 @@ async function run(target, mode) {
     // 读取文件内容
     const content = fsExtra.readFileSync(file, "utf-8");
 
-    const ast = parse(content);
+    // 解析文件内容 生成 AST
+    const ctx = parse(content, file);
 
-    const options = {
-      file,
-    };
+    // 执行规则 处理 AST
+    transform(ctx);
 
-    // 执行规则
-    removeConsole(ast, options);
-    removeUnusedVar(ast, options);
-    removeUnusedImport(ast, options);
+    if (mode.fix && ctx.modified) {
+      const output = generator(ctx);
 
-    if (mode.fix) {
-      const output = generate(ast, {}).code;
-
-      if (output !== content) {
-        modifiedCount++;
-        fsExtra.writeFileSync(file, output);
-      }
+      modifiedCount++;
+      fsExtra.writeFileSync(file, output);
     }
   }
 

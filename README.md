@@ -4,7 +4,7 @@ A powerful codemod tool to automatically clean up console statements, unused var
 
 ## Features
 
-- 🧹 Remove console.log, console.error, etc.
+- 🧹 Remove console.log, console.error
 - 🗑️ Delete unused variables
 - 📦 Remove unused imports
 - 🎯 Support JS, TS, Vue files
@@ -16,10 +16,31 @@ A powerful codemod tool to automatically clean up console statements, unused var
 ```bash
 # Global installation
 npm install -g codemod-clean
+```
 
+## Options
+
+| Option  | Description                             | Default |
+| ------- | --------------------------------------- | ------- |
+| `--dry` | Preview changes without modifying files | `true`  |
+| `--fix` | Automatically apply fixes to the code   | `false` |
+
+## Usage
+
+```bash
 # Global usage
 codemod-clean run <path> [options]
 
 # Or use npx directly
 npx codemod-clean run <path> [options]
+```
+
+### Examples
+
+```bash
+# Preview changes without modifying files
+codemod-clean run ./src --dry
+
+# Automatically fix all issues
+codemod-clean run ./src --fix
 ```

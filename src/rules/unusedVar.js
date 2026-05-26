@@ -12,6 +12,7 @@ function removeUnusedVar(ast, options = {}) {
       if (binding && !binding.referenced) {
         reporter.collect("unusedVar", path.node, options);
         path.remove();
+        options.modified = true;
       }
     },
   });

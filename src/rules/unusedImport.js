@@ -16,6 +16,7 @@ function removeUnusedImport(ast, options = {}) {
       if (!useds.length) {
         reporter.collect("unusedImport", path.node, options);
         path.remove();
+        options.modified = true;
       }
     },
   });

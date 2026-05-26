@@ -49,7 +49,7 @@ class Reporter {
 
   #getLabel(type) {
     const labelMap = {
-      console: "console 调用",
+      console: "console",
       var: "未使用变量",
       import: "未使用导入",
     };
@@ -60,6 +60,11 @@ class Reporter {
   // 打印日志
   #log(message, level = 0) {
     console.log(`${"  ".repeat(level)}${message}`);
+  }
+
+  #printHeader(title) {
+    this.#log(chalk.green(`\n${title}`));
+    this.#log("-".repeat(30));
   }
 
   // 获取相对路径
@@ -104,7 +109,7 @@ class Reporter {
   collect(type, node, options = {}) {
     const change = {
       type,
-      action: this.mode === "fix" ? "removed" : "will remove",
+      action: this.mode === "fix" ? "removed" : "to remove",
       message: this.#getMessage(type, node),
       code: generate(node).code,
       line: node.loc.start.line,
@@ -124,15 +129,19 @@ class Reporter {
 
   // 打印记录
   printSummary() {
-    console.log(chalk.blue(`\n✅ 处理完成:`));
+    this.#log("\n✅ 处理完成");
 
-    console.log(chalk.white(`📃 处理文件数: ${this.#stats.filesProcessed}`));
-    console.log(chalk.white(`📝 修改文件数: ${this.#stats.filesModified}`));
-    console.log(chalk.white(`📉 总计: ${this.#stats.totalRemovals}`));
+    this.#printHeader("📁 文件统计");
+
+    console.log(chalk.white(`处理文件数: ${this.#stats.filesProcessed}`));
+    console.log(chalk.white(`修改文件数: ${this.#stats.filesModified}`));
+    console.log(chalk.white(`问题总数  : ${this.#stats.totalRemovals}`));
+
+    this.#printHeader("📊 Rule 统计");
 
     this.#types.forEach((type) => {
       this.#log(
-        chalk.gray(`- ${this.#getLabel(type)}: ${this.#stats.byType[type]}`),
+        chalk.white(`${this.#getLabel(type)}: ${this.#stats.byType[type]}`),
       );
     });
   }
@@ -144,7 +153,8 @@ class Reporter {
       return;
     }
 
-    console.log(chalk.blue("\n📝 详细修改报告（按文件分类）:\n"));
+    console.log(chalk.blue("\n📝 详细修改报告（按文件分类）"));
+    this.#log("═".repeat(50));
 
     let fileIndex = 0;
 
@@ -153,7 +163,8 @@ class Reporter {
 
       const relativePath = this.#getRelativePath(file);
 
-      this.#log(chalk.cyan(chalk.bold(`${fileIndex}.📝 ${relativePath}`)));
+      this.#log(chalk.cyan(chalk.bold(`\n${fileIndex}.📄 ${relativePath}`)));
+      this.#log("-".repeat(30));
 
       const grouped = this.#groupByType(changes);
 
@@ -169,11 +180,11 @@ class Reporter {
 
         changesByType.forEach((change, index) => {
           this.#log(
-            `${chalk.gray(`${index + 1}.`)}${chalk.white(change.message)}`,
+            `${chalk.dim(`${index + 1}.`)}${chalk.white(change.message)}`,
             2,
           );
-          this.#log(chalk.dim(`代码: ${change.code}`), 2);
-          this.#log(chalk.yellow(`位置: 第 ${change.line} 行`), 2);
+          this.#log(chalk.dim(`• 代码: ${change.code}`), 2);
+          this.#log(chalk.yellow(`• 位置: 第 ${change.line} 行`), 2);
         });
       }
     }
