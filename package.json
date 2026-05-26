@@ -4,9 +4,9 @@
   "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
   "main": "./bin/cli.js",
   "scripts": {
-    "release:patch": "standard-version --release-as patch",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major",
+    "version:patch": "standard-version --release-as patch --skip.tag",
+    "version:minor": "standard-version --release-as minor --skip.tag",
+    "version:major": "standard-version --release-as major --skip.tag",
     "release": "node scripts/release.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
