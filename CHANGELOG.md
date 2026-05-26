@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.0.0 (2026-05-26)
+
+
+### Features
+
+* 新增 vue 文件 script 部分扫描及处理 ([87dccc0](https://github.com/liyang0318/codemod-clean/commit/87dccc049e5d38a1f4c3dc8652a3e3ed8f3eb4c8))
+* 新增发布脚本 ([4c8f0ca](https://github.com/liyang0318/codemod-clean/commit/4c8f0ca9a7900a10950d1fe015b1623d625d6075))
+* 优化 release 脚本 ([afd5664](https://github.com/liyang0318/codemod-clean/commit/afd566473d3260c8c1f24329cd7a8abcaf2d103e))
+* 优化 release hasChanges 方法 ([690f49f](https://github.com/liyang0318/codemod-clean/commit/690f49f37f48d08a3f5e4b75076286394d22d010))
+* add license ([8846b62](https://github.com/liyang0318/codemod-clean/commit/8846b6261c7b2c136c2c972fa2c7670a2ac769f5))
+* add standard-version ([6669765](https://github.com/liyang0318/codemod-clean/commit/6669765a756176353a9e3279b24fbca91d64f3c4))
+
+
+### Bug Fixes
+
+* 修复 release 脚本 ([9352797](https://github.com/liyang0318/codemod-clean/commit/93527971193c02e14b700744815ef6745eb8a49c))
+* 修复 release 脚本 ([828d58f](https://github.com/liyang0318/codemod-clean/commit/828d58f4df5f2fd302eb413062b12cc92e271560))
+
 ### 1.1.6 (2026-05-26)
 
 
