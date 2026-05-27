@@ -8,6 +8,8 @@
     "version:minor": "standard-version --release-as minor --skip.tag",
     "version:major": "standard-version --release-as major --skip.tag",
     "release": "node scripts/release.js",
+    "release:version": "node scripts/release.js --version-only",
+    "release:publish": "node scripts/release.js --publish-only",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
