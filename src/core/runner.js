@@ -41,7 +41,11 @@ async function run(target, mode) {
   reporter.updateFileModifiedStats(modifiedCount);
   reporter.updateFilesProcessed(files.length);
 
-  reporter.printReport();
+  if (mode.json) {
+    reporter.printJsonReport();
+  } else {
+    reporter.printAllReport();
+  }
 }
 
 module.exports = run;

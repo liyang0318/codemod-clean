@@ -10,14 +10,14 @@ class Reporter {
     filesProcessed: 0, // 处理的文件数
     filesModified: 0, // 修改的文件数
     totalRemovals: 0, // 总删除数
-    byType: {
+    byRule: {
       console: 0,
       unusedVar: 0,
       unusedImport: 0,
     },
   };
 
-  #types = ["console", "unusedVar", "unusedImport"];
+  #rules = ["console", "unusedVar", "unusedImport"];
   #changesByFile = new Map();
 
   constructor(mode) {
@@ -30,11 +30,11 @@ class Reporter {
     this.mode = mode;
   }
 
-  #updateStats(type) {
+  #updateStats(rule) {
     this.#stats.totalRemovals++;
 
-    const byType = this.#stats.byType;
-    byType[type]++;
+    const byRule = this.#stats.byRule;
+    byRule[rule]++;
   }
 
   // 更新处理的文件数
@@ -72,15 +72,15 @@ class Reporter {
     return path.relative(process.cwd(), filePath);
   }
 
-  // 按类型分组
-  #groupByType(changes) {
+  // 按规则分组
+  #groupByRule(changes) {
     const grouped = {};
 
-    this.#types.forEach((type) => {
+    this.#rules.forEach((rule) => {
       for (const change of changes) {
-        if (change.type === type) {
-          grouped[type] = grouped[type] || [];
-          grouped[type].push(change);
+        if (change.rule === rule) {
+          grouped[rule] = grouped[rule] || [];
+          grouped[rule].push(change);
         }
       }
     });
@@ -88,7 +88,7 @@ class Reporter {
     return grouped;
   }
   // 获取消息
-  #getMessage(type, node) {
+  #getMessage(rule, node) {
     const messageMap = {
       console: () => {
         const methodName = node.callee.property.name;
@@ -102,15 +102,15 @@ class Reporter {
       },
     };
 
-    return messageMap[type]?.() || type;
+    return messageMap[rule]?.() || rule;
   }
 
   // 收集删除记录
-  collect(type, node, options = {}) {
+  collect(rule, node, options = {}) {
     const change = {
-      type,
-      action: this.mode === "fix" ? "removed" : "to remove",
-      message: this.#getMessage(type, node),
+      rule,
+      action: this.mode === "fix" ? "removed" : "remove",
+      message: this.#getMessage(rule, node),
       code: generate(node).code,
       line: node.loc.start.line,
     };
@@ -122,7 +122,7 @@ class Reporter {
     this.#changesByFile.get(options.file).push(change);
 
     // 更新统计
-    this.#updateStats(type);
+    this.#updateStats(rule);
 
     return change;
   }
@@ -139,9 +139,9 @@ class Reporter {
 
     this.#printHeader("📊 Rule 统计");
 
-    this.#types.forEach((type) => {
+    this.#rules.forEach((rule) => {
       this.#log(
-        chalk.white(`${this.#getLabel(type)}: ${this.#stats.byType[type]}`),
+        chalk.white(`${this.#getLabel(rule)}: ${this.#stats.byRule[rule]}`),
       );
     });
   }
@@ -166,19 +166,19 @@ class Reporter {
       this.#log(chalk.cyan(chalk.bold(`\n${fileIndex}.📄 ${relativePath}`)));
       this.#log("-".repeat(30));
 
-      const grouped = this.#groupByType(changes);
+      const grouped = this.#groupByRule(changes);
 
-      for (const type in grouped) {
-        const changesByType = grouped[type];
+      for (const rule in grouped) {
+        const changesByRule = grouped[rule];
 
-        if (changesByType.length === 0) continue;
+        if (changesByRule.length === 0) continue;
 
         this.#log(
-          chalk.white(`${this.#getLabel(type)} (${changesByType.length}):`),
+          chalk.white(`${this.#getLabel(rule)} (${changesByRule.length}):`),
           1,
         );
 
-        changesByType.forEach((change, index) => {
+        changesByRule.forEach((change, index) => {
           this.#log(
             `${chalk.dim(`${index + 1}.`)}${chalk.white(change.message)}`,
             2,
@@ -190,9 +190,52 @@ class Reporter {
     }
   }
 
-  printReport() {
+  printAllReport() {
     this.printSummary();
     this.printDetailedReport();
+  }
+
+  // --json 输出
+  printJsonReport() {
+    const summary = {
+      filesProcessed: this.#stats.filesProcessed,
+      filesModified: this.#stats.filesModified,
+      totalRemovals: this.#stats.totalRemovals,
+    };
+
+    const rules = Object.fromEntries(
+      Object.entries(this.#stats.byRule).map(([rule, count]) => [
+        this.#getLabel(rule),
+        count,
+      ]),
+    );
+
+    const files = [];
+
+    if (this.#changesByFile.size > 0) {
+      for (const [file, changes] of this.#changesByFile) {
+        files.push({
+          file: this.#getRelativePath(file),
+          issues: changes.map((change) => ({
+            rule: this.#getLabel(change.rule),
+            action: change.action,
+            message: change.message,
+            code: change.code,
+            line: change.line,
+          })),
+        });
+      }
+    }
+
+    const result = {
+      summary,
+      rules,
+      files,
+    };
+
+    console.log(JSON.stringify(result, null, 2));
+
+    return result;
   }
 
   getStats() {
@@ -206,7 +249,7 @@ class Reporter {
       filesProcessed: 0,
       filesModified: 0,
       totalRemovals: 0,
-      byType: {
+      byRule: {
         console: 0,
         unusedVar: 0,
         unusedImport: 0,
