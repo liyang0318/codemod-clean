@@ -1,46 +1,59 @@
 # codemod-clean
 
-A powerful codemod tool to automatically clean up console statements, unused variables, and unused imports in JavaScript/TypeScript/Vue code.
+A codemod tool that automatically removes console statements, unused variables, and unused imports in JavaScript, TypeScript, and Vue codebases.
 
 ## Features
 
-- 🧹 Remove console.log, console.error
-- 🗑️ Delete unused variables
+- 🧹 Remove console statements (console.log, console.error, etc.)
+- 🗑️ Remove unused variables
 - 📦 Remove unused imports
-- 🎯 Support JS, TS, Vue files
-- 🔍 Dry run mode to preview changes
-- 📊 Detailed report generation
+- 🎯 Supports JS / TS / Vue files
+- 🔍 Dry-run mode for safe preview
+- 📊 Structured report output (stylish / JSON)
 
 ## Installation
 
 ```bash
-# Global installation
 npm install -g codemod-clean
 ```
 
 ## Options
 
-| Option  | Description                             | Default |
-| ------- | --------------------------------------- | ------- |
-| `--dry` | Preview changes without modifying files | `true`  |
-| `--fix` | Automatically apply fixes to the code   | `false` |
+| Option      | Description                                       | Default |
+| ----------- | ------------------------------------------------- | ------- |
+| `--dry`     | Preview changes without modifying files (default) | `true`  |
+| `--fix`     | Automatically apply fixes to the code             | `false` |
+| `--json`    | Output results in JSON format                     | `false` |
+| `--stylish` | Output human-readable report (default)            | `true`  |
+
+---
+
+## Rules
+
+- `--fix` and `--dry` are mutually exclusive
+- `--json` and `--stylish` are mutually exclusive
+- Default behavior: `dry + stylish`
+
+---
 
 ## Usage
 
 ```bash
-# Global usage
 codemod-clean run <path> [options]
 
-# Or use npx directly
+# or use npx directly
 npx codemod-clean run <path> [options]
 ```
 
 ### Examples
 
 ```bash
-# Preview changes without modifying files
-codemod-clean run ./src --dry
+# Preview changes (safe mode)
+codemod-clean run ./src
 
-# Automatically fix all issues
+# Apply fixes
 codemod-clean run ./src --fix
+
+# JSON output (for CI)
+codemod-clean run ./src --json
 ```
