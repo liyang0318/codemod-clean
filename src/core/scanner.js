@@ -15,7 +15,7 @@ async function scan(target) {
 
   const stat = fsExtra.statSync(abs);
 
-  const exts = [".js", ".ts", ".vue"];
+  const exts = [".js", ".ts", ".vue", ".jsx", ".tsx"];
 
   // 文件
   if (stat.isFile()) {
