@@ -42,6 +42,12 @@
     "fs-extra": "^11.3.5",
     "globby": "^16.2.0"
   },
+  "devDependencies": {
+    "execa": "^9.6.1",
+    "prompts": "^2.4.2",
+    "semver": "^7.8.1",
+    "standard-version": "^9.5.0"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -52,10 +58,7 @@
   },
   "author": "liyang",
   "license": "ISC",
-  "devDependencies": {
-    "execa": "^9.6.1",
-    "prompts": "^2.4.2",
-    "semver": "^7.8.1",
-    "standard-version": "^9.5.0"
+  "engines": {
+    "node": ">=20.11.0"
   }
 }

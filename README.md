@@ -1,5 +1,9 @@
 # codemod-clean
 
+[![npm version](https://img.shields.io/npm/v/codemod-clean)](https://www.npmjs.com/package/codemod-clean)
+[![npm downloads](https://img.shields.io/npm/dw/codemod-clean)](https://www.npmjs.com/package/codemod-clean)
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+
 A codemod tool that automatically removes console statements, unused variables, and unused imports in JavaScript, TypeScript, and Vue codebases.
 
 ## Features
@@ -30,8 +34,8 @@ npm install -g codemod-clean
 
 ## Rules
 
-- `--fix` and `--dry` are mutually exclusive
-- `--json` and `--stylish` are mutually exclusive
+- `--fix` and `--dry` cannot be used together.
+- `--json` and `--stylish` cannot be used together.
 - Default behavior: `dry + stylish`
 
 ---
@@ -54,6 +58,6 @@ codemod-clean run ./src
 # Apply fixes
 codemod-clean run ./src --fix
 
-# JSON output (for CI)
-codemod-clean run ./src --json
+# JSON output
+codemod-clean run ./src/index.js --json
 ```
