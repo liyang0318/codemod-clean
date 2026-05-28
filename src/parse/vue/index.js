@@ -10,10 +10,10 @@ function parseVUE(content, file) {
 
   const references = parseTemplate(template)?.references;
 
-  const bindings = parseStyle(styles)?.reduce((pre, cur) => {
-    pre.add(...cur.bindings);
-    return pre;
-  }, new Set());
+  const bindings =
+    parseStyle(styles)?.reduce((pre, cur) => {
+      return new Set([...pre, ...cur.bindings]);
+    }, new Set()) ?? new Set();
 
   const usedVariables = new Set([...bindings, ...references]);
 
