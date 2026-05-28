@@ -8,4 +8,14 @@ function parse(content) {
   });
 }
 
-module.exports = parse;
+function parseExpression(content) {
+  return parser.parseExpression(content, {
+    sourceType: "module",
+    plugins: ["typescript", "jsx"],
+  });
+}
+
+module.exports = {
+  parse,
+  parseExpression,
+};

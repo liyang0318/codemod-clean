@@ -1,6 +1,6 @@
 {
   "name": "codemod-clean",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
   "main": "./bin/cli.js",
   "scripts": {
@@ -36,11 +36,18 @@
     "@babel/parser": "^7.29.3",
     "@babel/traverse": "^7.29.0",
     "@babel/types": "^7.29.0",
+    "@vue/compiler-dom": "^3.5.35",
     "@vue/compiler-sfc": "^3.5.34",
     "chalk": "^4.1.2",
     "commander": "^14.0.3",
     "fs-extra": "^11.3.5",
     "globby": "^16.2.0"
+  },
+  "devDependencies": {
+    "execa": "^9.6.1",
+    "prompts": "^2.4.2",
+    "semver": "^7.8.1",
+    "standard-version": "^9.5.0"
   },
   "publishConfig": {
     "access": "public",
@@ -52,10 +59,7 @@
   },
   "author": "liyang",
   "license": "ISC",
-  "devDependencies": {
-    "execa": "^9.6.1",
-    "prompts": "^2.4.2",
-    "semver": "^7.8.1",
-    "standard-version": "^9.5.0"
+  "engines": {
+    "node": ">=20.11.0"
   }
 }
