@@ -49,7 +49,7 @@ codemod-clean run <path> [options]
 npx codemod-clean run <path> [options]
 ```
 
-### Examples
+## Examples
 
 ```bash
 # Preview changes (safe mode)
