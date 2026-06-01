@@ -5,9 +5,16 @@ const transform = require("../transform/index.js");
 const generator = require("../generator/index.js");
 const Reporter = require("./reporter.js");
 const scan = require("./scanner.js");
+const Ignore = require("@core/ignore.js");
 
 async function run(target, mode) {
-  const files = await scan(target);
+  const targetPath = target || "./";
+
+  const ignore = new Ignore(targetPath);
+
+  ignore.printIgnoreInfo();
+
+  const files = await scan(targetPath);
 
   if (!files?.length) {
     console.log(chalk.yellow("🔔 提示:"), chalk.dim("未发现可处理的文件"));

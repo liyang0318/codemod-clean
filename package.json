@@ -3,6 +3,12 @@
   "version": "2.2.1",
   "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
   "main": "./bin/cli.js",
+  "_moduleAliases": {
+    "@": "./src",
+    "@core": "./src/core",
+    "@utils": "./src/utils",
+    "@constants": "./src/constants"
+  },
   "scripts": {
     "version:patch": "standard-version --release-as patch --skip.tag",
     "version:minor": "standard-version --release-as minor --skip.tag",
@@ -40,8 +46,11 @@
     "@vue/compiler-sfc": "^3.5.34",
     "chalk": "^4.1.2",
     "commander": "^14.0.3",
+    "dayjs": "^1.11.21",
     "fs-extra": "^11.3.5",
-    "globby": "^16.2.0"
+    "globby": "^16.2.0",
+    "module-alias": "^2.3.4",
+    "treeify": "^1.1.0"
   },
   "devDependencies": {
     "execa": "^9.6.1",
