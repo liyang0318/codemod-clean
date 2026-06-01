@@ -32,12 +32,21 @@ importers:
       commander:
         specifier: ^14.0.3
         version: 14.0.3
+      dayjs:
+        specifier: ^1.11.21
+        version: 1.11.21
       fs-extra:
         specifier: ^11.3.5
         version: 11.3.5
       globby:
         specifier: ^16.2.0
         version: 16.2.0
+      module-alias:
+        specifier: ^2.3.4
+        version: 2.3.4
+      treeify:
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       execa:
         specifier: ^9.6.1
@@ -325,6 +334,9 @@ packages:
 
   dateformat@3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
+
+  dayjs@1.11.21:
+    resolution: {integrity: sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -682,6 +694,9 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
 
+  module-alias@2.3.4:
+    resolution: {integrity: sha512-bOclZt8hkpuGgSSoG07PKmvzTizROilUTvLNyrMqvlC9snhs7y7GzjNWAVbISIOlhCP1T14rH1PDAV9iNyBq/w==}
+
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
@@ -990,6 +1005,10 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
+
+  treeify@1.1.0:
+    resolution: {integrity: sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==}
+    engines: {node: '>=0.6'}
 
   trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
@@ -1415,6 +1434,8 @@ snapshots:
 
   dateformat@3.0.3: {}
 
+  dayjs@1.11.21: {}
+
   debug@4.4.3:
     dependencies:
       ms: 2.1.3
@@ -1744,6 +1765,8 @@ snapshots:
 
   modify-values@1.0.1: {}
 
+  module-alias@2.3.4: {}
+
   ms@2.1.3: {}
 
   nanoid@3.3.12: {}
@@ -2039,6 +2062,8 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
+
+  treeify@1.1.0: {}
 
   trim-newlines@3.0.1: {}
 

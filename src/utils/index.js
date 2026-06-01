@@ -1,7 +1,12 @@
 const chalk = require("chalk");
-const { MUTUALLY_EXCLUSIVE } = require("../constants/index.js");
+const {
+  MUTUALLY_EXCLUSIVE,
+  ANALYZE_MUTUALLY_EXCLUSIVE,
+} = require("../constants/index.js");
 const generate = require("@babel/generator").default;
 const { parseExpression } = require("./parse.js");
+const path = require("path");
+const dayjs = require("dayjs");
 
 /**
  * 处理错误并退出程序
@@ -15,9 +20,14 @@ function handleErrorExit(message) {
 /**
  * 验证选项是否互斥
  * @param {Object} options
+ * @param {string} type
  */
-function validateOptions(options) {
-  for (const group of MUTUALLY_EXCLUSIVE) {
+function validateOptions(options, type = "run") {
+  const mutuallyExclusive = {
+    run: MUTUALLY_EXCLUSIVE,
+    analyze: ANALYZE_MUTUALLY_EXCLUSIVE,
+  };
+  for (const group of mutuallyExclusive[type]) {
     const actives = group.filter((key) => options[key]);
 
     if (actives.length > 1) {
@@ -102,11 +112,45 @@ function extractExpression(content, references) {
  */
 function extractVFor(content, references) {
   // item in list
-  const match = exp.match(/in\s+(.+)$/);
+  const match = content.match(/in\s+(.+)$/);
 
   if (match) {
-    references.add(match[1], references);
+    references.add(match[1]);
   }
+}
+
+/**
+ * 获取文件路径的相对路径
+ * @param {string} filePath
+ */
+function getRelativePath(filePath) {
+  return path.relative(process.cwd(), filePath);
+}
+
+/**
+ * 格式化日期
+ * @param {Date} date
+ * @param {string} format
+ */
+function formatDate(date, format) {
+  const defaultFormat = "YYYY-MM-DD HH:mm:ss";
+
+  return dayjs(date).format(format || defaultFormat);
+}
+
+/**
+ * 格式化大小
+ * @param {number} bytes
+ * @param {number} decimals
+ */
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return (
+    parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i]
+  );
 }
 
 module.exports = {
@@ -115,4 +159,7 @@ module.exports = {
   transformBlock,
   extractExpression,
   extractVFor,
+  getRelativePath,
+  formatDate,
+  formatBytes,
 };
