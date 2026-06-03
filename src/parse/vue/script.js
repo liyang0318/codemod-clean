@@ -1,10 +1,10 @@
-const { transformBlock } = require("../../utils/index.js");
-const { parse } = require("../../utils/parse.js");
+const { transformBlock } = require("../utils/index.js");
+const { parse } = require("@utils/parse.js");
 
 function parseScript({ script, scriptSetup }) {
   const blocks = [];
 
-  // 普通 script
+  // script
   if (script) {
     blocks.push(transformBlock(script, parse(script.content), "script"));
   }

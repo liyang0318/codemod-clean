@@ -8,7 +8,8 @@ function parse(content, file) {
   switch (ext) {
     case ".vue":
       return parseVUE(content, file);
-    default:
+    case ".js":
+    case ".ts":
       return parseJS(content, file);
   }
 }

@@ -2,13 +2,18 @@ const traverse = require("@babel/traverse").default;
 const t = require("@babel/types");
 const Reporter = require("../core/reporter.js");
 
-function removeConsole(ast, options = {}) {
-  const methodsToRemove = options.methodsToRemove || ["log", "info"];
-  const isRemoveAll = options.isRemoveAll || false;
+/**
+ * 移除 console.log 等方法调用
+ * @param {Block} block - 代码块
+ * @param {Object} options - 信息对象
+ * @returns {Block} - 代码块
+ */
+function removeConsole(block, options = {}) {
+  const { methodsToRemove = ["log", "info"], isRemoveAll = false } = options;
 
   const reporter = new Reporter();
 
-  traverse(ast, {
+  traverse(block.ast, {
     CallExpression(path) {
       const callee = path.node.callee;
 
@@ -33,7 +38,7 @@ function removeConsole(ast, options = {}) {
     },
   });
 
-  return ast;
+  return block;
 }
 
 module.exports = removeConsole;

@@ -6,22 +6,10 @@ const path = require("path");
  * 报告器 - 收集删除记录并打印统计信息
  */
 class Reporter {
-  #stats = {
-    filesProcessed: 0, // 处理的文件数
-    filesModified: 0, // 修改的文件数
-    totalRemovals: 0, // 总删除数
-    byRule: {
-      console: 0,
-      unusedVar: 0,
-      unusedImport: 0,
-    },
-  };
-
-  #rules = ["console", "unusedVar", "unusedImport"];
-  #changesByFile = new Map();
-
   constructor(mode) {
     if (Reporter.instance) {
+      Reporter.instance.mode = mode;
+
       return Reporter.instance;
     }
 
@@ -30,6 +18,21 @@ class Reporter {
     this.mode = mode;
   }
 
+  #stats = {
+    filesProcessed: 0, // 处理的文件数
+    filesModified: 0, // 修改的文件数
+    totalRemovals: 0, // 总删除数
+    byRule: {
+      console: 0,
+      unusedVar: 0,
+      unusedImport: 0,
+      unusedClass: 0,
+    },
+  };
+
+  #rules = ["console", "unusedVar", "unusedImport", "unusedClass"];
+  #changesByFile = new Map();
+
   #updateStats(rule) {
     this.#stats.totalRemovals++;
 
@@ -37,24 +40,15 @@ class Reporter {
     byRule[rule]++;
   }
 
-  // 更新处理的文件数
-  updateFilesProcessed(processed) {
-    this.#stats.filesProcessed += processed;
-  }
-
-  // 更新修改的文件数
-  updateFileModifiedStats(modified) {
-    this.#stats.filesModified += modified;
-  }
-
-  #getLabel(type) {
+  #getLabel(rule) {
     const labelMap = {
       console: "console",
-      var: "未使用变量",
-      import: "未使用导入",
+      unusedVar: "unused var",
+      unusedImport: "unused import",
+      unusedClass: "unused class",
     };
 
-    return labelMap[type] || type;
+    return labelMap[rule] || rule;
   }
 
   // 打印日志
@@ -92,27 +86,49 @@ class Reporter {
     const messageMap = {
       console: () => {
         const methodName = node.callee.property.name;
-        return `console.${methodName}() 调用`;
+        return `console.${methodName}() called`;
       },
       unusedVar: () => {
-        return `未使用变量 ${node.id.name}`;
+        return `unused var ${node.id.name}`;
       },
       unusedImport: () => {
-        return `未使用导入 ${node.source.value}`;
+        return `unused import ${node.source.value}`;
+      },
+      unusedClass: () => {
+        return `unused class ${node.selector}`;
       },
     };
 
     return messageMap[rule]?.() || rule;
   }
 
+  #formatNodeIno(rule, node) {
+    const info = {
+      message: this.#getMessage(rule, node),
+      code: "",
+      line: 0,
+    };
+
+    if (rule === "unusedClass") {
+      info.code = node.toString();
+      info.line = node.source?.start?.line;
+    } else {
+      info.code = generate(node).code;
+      info.line = node.loc.start.line;
+    }
+
+    return info;
+  }
+
   // 收集删除记录
   collect(rule, node, options = {}) {
+    const { message, code, line } = this.#formatNodeIno(rule, node);
     const change = {
       rule,
       action: this.mode === "fix" ? "removed" : "remove",
-      message: this.#getMessage(rule, node),
-      code: generate(node).code,
-      line: node.loc.start.line,
+      message,
+      code,
+      line,
     };
 
     if (!this.#changesByFile.has(options.file)) {
@@ -129,15 +145,15 @@ class Reporter {
 
   // 打印记录
   printSummary() {
-    this.#log("\n✅ 处理完成");
+    this.#log("\n✅ processed");
 
-    this.#printHeader("📁 文件统计");
+    this.#printHeader("📁 file statistics");
 
-    console.log(chalk.white(`处理文件数: ${this.#stats.filesProcessed}`));
-    console.log(chalk.white(`修改文件数: ${this.#stats.filesModified}`));
-    console.log(chalk.white(`问题总数  : ${this.#stats.totalRemovals}`));
+    console.log(chalk.white(`processed files: ${this.#stats.filesProcessed}`));
+    console.log(chalk.white(`modified files : ${this.#stats.filesModified}`));
+    console.log(chalk.white(`total removals : ${this.#stats.totalRemovals}`));
 
-    this.#printHeader("📊 Rule 统计");
+    this.#printHeader("📊 rule statistics");
 
     this.#rules.forEach((rule) => {
       this.#log(
@@ -149,11 +165,11 @@ class Reporter {
   // 详细报告
   printDetailedReport() {
     if (this.#changesByFile.size === 0) {
-      console.log(chalk.yellow("\n📝 没有发现需要修改的代码"));
+      console.log(chalk.yellow("\n📝 no code to remove"));
       return;
     }
 
-    console.log(chalk.blue("\n📝 详细修改报告（按文件分类）"));
+    console.log(chalk.blue("\n📝 detailed report by file"));
     this.#log("═".repeat(50));
 
     let fileIndex = 0;
@@ -174,7 +190,7 @@ class Reporter {
         if (changesByRule.length === 0) continue;
 
         this.#log(
-          chalk.white(`${this.#getLabel(rule)} (${changesByRule.length}):`),
+          chalk.white(`- ${this.#getLabel(rule)} (${changesByRule.length}):`),
           1,
         );
 
@@ -183,13 +199,14 @@ class Reporter {
             `${chalk.dim(`${index + 1}.`)}${chalk.white(change.message)}`,
             2,
           );
-          this.#log(chalk.dim(`• 代码: ${change.code}`), 2);
-          this.#log(chalk.yellow(`• 位置: 第 ${change.line} 行`), 2);
+          this.#log(chalk.dim(`• code: ${change.code}`), 2);
+          this.#log(chalk.yellow(`• location: line ${change.line} `), 2);
         });
       }
     }
   }
 
+  // 打印所有报告 --stylish 输出
   printAllReport() {
     this.printSummary();
     this.printDetailedReport();
@@ -238,10 +255,22 @@ class Reporter {
     return result;
   }
 
+  // 获取统计信息
   getStats() {
     return { ...this.#stats };
   }
 
+  // 更新处理的文件数
+  updateFilesProcessed(processed) {
+    this.#stats.filesProcessed += processed;
+  }
+
+  // 更新修改的文件数
+  updateFileModifiedStats(modified) {
+    this.#stats.filesModified += modified;
+  }
+
+  // 重置统计信息
   reset() {
     this.#changesByFile = new Map();
 
@@ -253,6 +282,7 @@ class Reporter {
         console: 0,
         unusedVar: 0,
         unusedImport: 0,
+        unusedClass: 0,
       },
     };
   }

@@ -8,16 +8,20 @@ function parseVUE(content, file) {
 
   const { script, scriptSetup, template, styles } = descriptor;
 
-  const references = parseTemplate(template)?.references;
+  const templateModule = parseTemplate(template);
+  const scriptModules = parseScript({ script, scriptSetup });
+  const styleModule = parseStyle(styles);
 
-  const bindings =
-    parseStyle(styles)?.reduce((pre, cur) => {
-      return new Set([...pre, ...cur.bindings]);
-    }, new Set()) ?? new Set();
+  const references = templateModule?.references;
+
+  const bindings = styleModule?.bindings;
 
   const usedVariables = new Set([...bindings, ...references]);
 
-  const blocks = parseScript({ script, scriptSetup });
+  const styleClasses = styleModule?.classes;
+  const templateClasses = templateModule?.classes;
+
+  const blocks = [templateModule, ...scriptModules, styleModule];
 
   return {
     type: "vue",
@@ -25,6 +29,8 @@ function parseVUE(content, file) {
     content,
     descriptor,
     usedVariables,
+    styleClasses,
+    templateClasses,
     blocks,
   };
 }

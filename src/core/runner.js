@@ -17,7 +17,10 @@ async function run(target, mode) {
   const files = await scan(targetPath);
 
   if (!files?.length) {
-    console.log(chalk.yellow("🔔 提示:"), chalk.dim("未发现可处理的文件"));
+    console.log(
+      chalk.yellow("🔔 hint:"),
+      chalk.dim("no files found to process"),
+    );
     process.exit(0);
   }
 
