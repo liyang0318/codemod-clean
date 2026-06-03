@@ -18,7 +18,7 @@ function scanFiles(abs, stat) {
 
   if (stat.isFile()) {
     if (!SUPPORTED_EXTENSIONS.includes(ext)) {
-      console.log(chalk.yellow(`⚠ 跳过不支持的文件类型: ${abs}`));
+      console.log(chalk.yellow(`⚠ skip unsupported file type: ${abs}`));
       return [];
     }
     return [abs];
@@ -33,7 +33,10 @@ function scanFiles(abs, stat) {
 
 function scanAll(abs, stat) {
   if (!stat.isDirectory()) {
-    console.log(chalk.red("❌ 错误:"), chalk.white(`路径 "${abs}" 不是目录`));
+    console.log(
+      chalk.red("❌ error:"),
+      chalk.white(`path "${abs}" not a directory`),
+    );
     process.exit(1);
   }
 
@@ -50,8 +53,11 @@ async function scan(target, mode = "file") {
   const abs = path.resolve(target);
 
   if (!fsExtra.existsSync(abs)) {
-    console.log(chalk.red("❌ 错误:"), chalk.white(`路径 "${target}" 不存在`));
-    console.log(chalk.yellow("🔔 提示:"), chalk.dim("请检查路径是否正确"));
+    console.log(
+      chalk.red("❌ error:"),
+      chalk.white(`path "${target}" not found`),
+    );
+    console.log(chalk.yellow("🔔 hint:"), chalk.dim("check path correctness"));
     process.exit(1);
   }
 

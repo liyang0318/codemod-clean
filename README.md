@@ -4,13 +4,14 @@
 [![npm downloads](https://img.shields.io/npm/dw/codemod-clean)](https://www.npmjs.com/package/codemod-clean)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
-A codemod tool that automatically removes console statements, unused variables, and unused imports in JavaScript, TypeScript, and Vue codebases.
+A codemod tool that automatically removes and analyzes console statements, unused variables, unused imports, and unused classes in JavaScript, TypeScript, and Vue, and analyzes the project structure.
 
 ## Features
 
-- 🧹 Remove console statements (console.log, console.error, etc.)
-- 🗑️ Remove unused variables
-- 📦 Remove unused imports
+- 🧹 Remove and analyze console statements (console.log, console.error, etc.)
+- 🗑️ Remove and analyze unused variables
+- 📦 Remove and analyze unused imports
+- 🏷 Remove and analyze unused classes
 - 🎯 Supports JS / TS / Vue files
 - 🔍 Dry-run mode for safe preview
 - 📊 Structured report output (stylish / JSON)

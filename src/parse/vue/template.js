@@ -1,28 +1,34 @@
 const compiler = require("@vue/compiler-dom");
-const { extractExpression, extractVFor } = require("../../utils/index.js");
+const { extractExpression, extractVFor } = require("../utils/index.js");
+const { collectTemplateClass } = require("@utils/collectClass.js");
 
-const references = new Set();
+const nodeTypes = compiler.NodeTypes;
 
 function parseTemplate(template) {
-  if (!template) return blocks;
+  if (!template) return {};
+
+  const references = new Set();
+  const classes = new Set();
 
   const templateAst = compiler.parse(template.content);
 
-  findVariable(templateAst);
+  findVariable(templateAst, references, classes);
 
   return {
     type: "template",
     content: template.content,
     ast: templateAst,
+    loc: template.loc,
     references,
+    classes,
   };
 }
 
-function findVariable(node) {
+function findVariable(node, references, classes) {
   if (!node) return [];
 
   // 插值 {{ num }}
-  if (node.type === 5) {
+  if (node.type === nodeTypes.INTERPOLATION) {
     const exp = node.content?.content;
 
     if (exp) {
@@ -45,8 +51,11 @@ function findVariable(node) {
     }
   }
 
+  // 收集 class 属性
+  collectTemplateClass(node, classes);
+
   if (node.children?.length) {
-    node.children.forEach(findVariable);
+    node.children.forEach((child) => findVariable(child, references, classes));
   }
 }
 

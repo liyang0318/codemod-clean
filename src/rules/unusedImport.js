@@ -1,10 +1,16 @@
 const traverse = require("@babel/traverse").default;
 const Reporter = require("../core/reporter.js");
 
-function removeUnusedImport(ast, options = {}) {
+/**
+ * 移除未使用的导入
+ * @param {Block} block - 代码块
+ * @param {Object} options - 信息对象
+ * @returns {Block} - 代码块
+ */
+function removeUnusedImport(block, options = {}) {
   const reporter = new Reporter();
 
-  traverse(ast, {
+  traverse(block.ast, {
     ImportDeclaration(path) {
       const { specifiers } = path.node;
 
@@ -20,6 +26,8 @@ function removeUnusedImport(ast, options = {}) {
       }
     },
   });
+
+  return block;
 }
 
 module.exports = removeUnusedImport;

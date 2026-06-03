@@ -3,14 +3,14 @@ const Reporter = require("../core/reporter.js");
 
 /**
  * 移除未使用的变量
- * @param {AST} ast - AST 树
+ * @param {Block} block - 代码块
  * @param {Object} options - 信息对象
- * @returns {AST} - AST 树
+ * @returns {Block} - 代码块
  */
-function removeUnusedVar(ast, options = {}) {
+function removeUnusedVar(block, options = {}) {
   const reporter = new Reporter();
 
-  traverse(ast, {
+  traverse(block.ast, {
     VariableDeclarator(path) {
       const name = path.node.id.name;
       const binding = path.scope.getBinding(name);
@@ -27,7 +27,7 @@ function removeUnusedVar(ast, options = {}) {
     },
   });
 
-  return ast;
+  return block;
 }
 
 /**
