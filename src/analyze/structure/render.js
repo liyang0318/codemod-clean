@@ -1,7 +1,7 @@
 const toJson = require("./toJson.js");
 const toTree = require("./toTree.js");
 
-function render(files, options = {}) {
+function renderStructure(files, options = {}) {
   if (options.json) {
     toJson(files);
   } else {
@@ -9,4 +9,4 @@ function render(files, options = {}) {
   }
 }
 
-module.exports = render;
+module.exports = renderStructure;

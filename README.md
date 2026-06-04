@@ -4,18 +4,35 @@
 [![npm downloads](https://img.shields.io/npm/dw/codemod-clean)](https://www.npmjs.com/package/codemod-clean)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
-A codemod tool that automatically removes and analyzes console statements, unused variables, unused imports, and unused classes in JavaScript, TypeScript, and Vue, and analyzes the project structure.
+Codemod Engine + Monorepo Static Analysis
+
+A codemod tool for JavaScript, TypeScript, and Vue that automatically detects and removes console statements, unused variables, unused imports, and unused classes, while also analyzing project structure and dependencies.
 
 ## Features
 
-- 🧹 Remove and analyze console statements (console.log, console.error, etc.)
-- 🗑️ Remove and analyze unused variables
-- 📦 Remove and analyze unused imports
-- 🏷 Remove and analyze unused classes
-- 🎯 Supports JS / TS / Vue files
-- 🔍 Dry-run mode for safe preview
-- 📊 Structured report output (stylish / JSON)
-- 🌳 Tree view output for project analysis
+- 🧹 **Console statement cleanup & analysis**  
+  Detect and optionally remove `console.log`, `console.error`, `console.warn`, and other console APIs with detailed reporting.
+
+- 🗑️ **Dead code detection**  
+  Identify and analyze unused variables across files and scopes, including cross-file references.
+
+- 📦 **Import optimization**  
+  Detect and remove unused or partially used imports across ES Modules and CommonJS syntax.
+
+- 🏷 **Class usage analysis**  
+  Detect unused class declarations and analyze class-level dead code.
+
+- 🎯 **Multi-language support**  
+  Full support for JavaScript, TypeScript, and Vue Single File Components (SFC).
+
+- 🔍 **Safe execution (dry-run mode)**  
+  Preview all changes before applying them to ensure safe refactoring.
+
+- 📊 **Structured reporting system**  
+  Output both human-readable (stylish CLI view) and machine-readable JSON reports for CI/CD integration.
+
+- 🌳 **Project & monorepo structure analysis**  
+  Visualize workspace structure, analyze package relationships, and inspect internal vs external dependencies in monorepo environments.
 
 ## Installation
 
@@ -36,12 +53,13 @@ npm install -g codemod-clean
 
 ### analyze Options
 
-| Option   | Description                               | Default |
-| -------- | ----------------------------------------- | ------- |
-| `--tree` | Output tree view of the project structure | `true`  |
-| `--json` | Output results in JSON format             | `false` |
-
----
+| Option      | Description                               | Default |
+| ----------- | ----------------------------------------- | ------- |
+| `--tree`    | Output tree view of the project structure | `true`  |
+| `--json`    | Output results in JSON format             | `false` |
+| `--package` | Package-level analysis (default)          | `true`  |
+| `--deps`    | Monorepo dependency graph analysis        | `false` |
+| `--shared`  | Monorepo shared package analysis          | `false` |
 
 ## Rules
 
@@ -54,7 +72,8 @@ npm install -g codemod-clean
 ### analyze
 
 - `--tree` and `--json` cannot be used together.
-- Default behavior: `tree`
+- `--package` `--shared` `--deps` cannot be used together.
+- Default behavior: `tree + package`
 
 ---
 
@@ -106,5 +125,5 @@ codemod-clean analyze ./src
 codemod-clean analyze ./src --tree
 
 # JSON output
-codemod-clean analyze ./src --json
+codemod-clean analyze ./src --json --shared
 ```

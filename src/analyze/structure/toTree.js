@@ -1,11 +1,12 @@
 const treeify = require("treeify");
-const { getStat } = require("./utils/index.js");
+const path = require("path");
+const { getStat } = require("@analyze/utils/index.js");
 
 function toTree(files) {
   const fileTree = {};
 
   for (const file of files) {
-    const parts = file.split("/");
+    const parts = file.split(path.sep);
 
     if (!parts.length) continue;
 

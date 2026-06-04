@@ -7,7 +7,8 @@
     "@": "./src",
     "@core": "./src/core",
     "@utils": "./src/utils",
-    "@constants": "./src/constants"
+    "@constants": "./src/constants",
+    "@analyze": "./src/analyze"
   },
   "scripts": {
     "version:patch": "standard-version --release-as patch --skip.tag",

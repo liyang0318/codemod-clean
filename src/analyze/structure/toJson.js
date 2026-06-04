@@ -1,13 +1,13 @@
 const path = require("path");
 const chalk = require("chalk");
-const { getStat } = require("./utils/index.js");
+const { getStat } = require("@analyze/utils/index.js");
 const { formatDate, formatBytes } = require("@utils/index.js");
 
 function toJson(files) {
   const fileTree = {};
 
   for (const file of files) {
-    const parts = file.split("/");
+    const parts = file.split(path.sep);
 
     if (!parts.length) continue;
 
@@ -16,7 +16,7 @@ function toJson(files) {
     parts.forEach((part, index) => {
       const isLast = index === parts.length - 1;
 
-      const currentPath = parts.slice(0, index + 1).join("/");
+      const currentPath = parts.slice(0, index + 1).join(path.sep);
 
       if (current && current[MARKERS_KEY_MAP.type.markKey] === "directory") {
         if (isLast) {
