@@ -1,6 +1,6 @@
 {
   "name": "codemod-clean",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
   "main": "./bin/cli.js",
   "_moduleAliases": {
