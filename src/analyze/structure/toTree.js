@@ -1,7 +1,7 @@
 const treeify = require("treeify");
 const path = require("path");
-const { getStat } = require("@analyze/utils/index.js");
-const { getRelativePath } = require("@utils/index.js");
+const { getStat } = require("../utils/index.js");
+const { getRelativePath } = require("../../utils/index.js");
 
 function toTree(targetPath, files) {
   const fileTree = {};

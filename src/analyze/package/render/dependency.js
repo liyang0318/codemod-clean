@@ -3,7 +3,7 @@ const toJson = require("./toJson.js");
 const {
   globWorkspacesPackages,
   formatDependencyTree,
-} = require("@analyze/utils/index.js");
+} = require("../../utils/index.js");
 
 async function renderDependenciesGraph(rootPath, workspaces, options = {}) {
   const files = await globWorkspacesPackages(rootPath, workspaces);

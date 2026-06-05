@@ -1,6 +1,6 @@
-const renderStructure = require("@/analyze/structure/render.js");
-const Ignore = require("@core/ignore.js");
-const packageAnalyzer = require("@/analyze/package/index.js");
+const renderStructure = require("../analyze/structure/render.js");
+const Ignore = require("./ignore.js");
+const packageAnalyzer = require("../analyze/package/index.js");
 
 async function analyze(target, options = {}) {
   const targetPath = target || ".";

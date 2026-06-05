@@ -1,11 +1,11 @@
-const { indent } = require("@utils/index.js");
+const { indent } = require("../../../utils/index.js");
 const chalk = require("chalk");
 const toJson = require("./toJson.js");
 const {
   getWorkspacesDeps,
   globWorkspacesPackages,
   parsePackageJson,
-} = require("@analyze/utils/index.js");
+} = require("../../utils/index.js");
 
 async function renderSharedGraph(rootPath, workspaces, options = {}) {
   const files = await globWorkspacesPackages(rootPath, workspaces);

@@ -1,6 +1,6 @@
 const compiler = require("@vue/compiler-dom");
 const { extractExpression, extractVFor } = require("../utils/index.js");
-const { collectTemplateClass } = require("@utils/collectClass.js");
+const { collectTemplateClass } = require("../../utils/collectClass.js");
 
 const nodeTypes = compiler.NodeTypes;
 

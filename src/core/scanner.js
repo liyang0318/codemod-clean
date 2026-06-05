@@ -2,11 +2,11 @@ const fsExtra = require("fs-extra");
 const path = require("path");
 const { globby } = require("globby");
 const chalk = require("chalk");
-const Ignore = require("@core/ignore.js");
+const Ignore = require("./ignore.js");
 const {
   SUPPORTED_EXTENSIONS,
   SUPPORTED_EXTENSIONS_PATTERN,
-} = require("@constants/index.js");
+} = require("../constants/index.js");
 
 function getIgnorePatterns(abs) {
   const ignore = new Ignore(abs);

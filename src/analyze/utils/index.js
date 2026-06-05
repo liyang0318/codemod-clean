@@ -2,8 +2,8 @@ const fsExtra = require("fs-extra");
 const path = require("path");
 const chalk = require("chalk");
 const { globby } = require("globby");
-const Ignore = require("@core/ignore.js");
-const { getRelativePath } = require("@utils/index.js");
+const Ignore = require("../../core/ignore.js");
+const { getRelativePath } = require("../../utils/index.js");
 
 function getStat(file) {
   return fsExtra.statSync(path.resolve(file));

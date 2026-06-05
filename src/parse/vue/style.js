@@ -1,5 +1,5 @@
-const { parseStyle: parseStylePostcss } = require("@utils/parse.js");
-const { collectStyleClass } = require("@utils/collectClass.js");
+const { parseStyle: parseStylePostcss } = require("../../utils/parse.js");
+const { collectStyleClass } = require("../../utils/collectClass.js");
 
 const REG = /v-bind\s*\(\s*['"]?([a-zA-Z_$][\w$]*)['"]?\s*\)/g;
 
