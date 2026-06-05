@@ -65,7 +65,6 @@ function getClassNamesBySelector(selector) {
 
   selectorParser((selectors) => {
     selectors.walkClasses((node) => {
-      console.log("node === ", node, node.value);
       classes.push(node.value);
     });
   }).processSync(selector);
