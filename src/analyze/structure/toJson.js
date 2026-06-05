@@ -1,13 +1,14 @@
 const path = require("path");
 const chalk = require("chalk");
 const { getStat } = require("@analyze/utils/index.js");
-const { formatDate, formatBytes } = require("@utils/index.js");
+const { formatDate, formatBytes, getRelativePath } = require("@utils/index.js");
 
-function toJson(files) {
+function toJson(targetPath, files) {
   const fileTree = {};
 
   for (const file of files) {
-    const parts = file.split(path.sep);
+    const relativePath = getRelativePath(file, targetPath);
+    const parts = relativePath.split(path.sep);
 
     if (!parts.length) continue;
 
@@ -18,10 +19,12 @@ function toJson(files) {
 
       const currentPath = parts.slice(0, index + 1).join(path.sep);
 
+      const currentAbsolutePath = path.resolve(targetPath, currentPath);
+
       if (current && current[MARKERS_KEY_MAP.type.markKey] === "directory") {
         if (isLast) {
           current[MARKERS_KEY_MAP.children.markKey].push(
-            getBaseItem(currentPath),
+            getBaseItem(currentAbsolutePath),
           );
         } else {
           const item = current[MARKERS_KEY_MAP.children.markKey].find(
@@ -29,14 +32,14 @@ function toJson(files) {
           );
           if (!item) {
             current[MARKERS_KEY_MAP.children.markKey].push(
-              getBaseItem(currentPath),
+              getBaseItem(currentAbsolutePath),
             );
           }
 
           current = item;
         }
       } else {
-        current[part] = current[part] || getBaseItem(currentPath);
+        current[part] = current[part] || getBaseItem(currentAbsolutePath);
         current = current[part];
       }
     });

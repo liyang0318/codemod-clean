@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-require("module-alias/register");
+
+const path = require("path");
+const moduleAlias = require("module-alias");
+const packageJsonPath = path.join(__dirname, "..", "package.json");
+moduleAlias(packageJsonPath);
 
 const { Command } = require("commander");
 const pkg = require("../package.json");

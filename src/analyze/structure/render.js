@@ -1,11 +1,14 @@
 const toJson = require("./toJson.js");
 const toTree = require("./toTree.js");
+const scan = require("@core/scanner.js");
 
-function renderStructure(files, options = {}) {
+async function renderStructure(targetPath, options = {}) {
+  const files = await scan(targetPath, "all");
+
   if (options.json) {
-    toJson(files);
+    toJson(targetPath, files);
   } else {
-    toTree(files);
+    toTree(targetPath, files);
   }
 }
 

@@ -1,5 +1,6 @@
 const { indent } = require("@utils/index.js");
 const chalk = require("chalk");
+const toJson = require("./toJson.js");
 const {
   getWorkspacesDeps,
   globWorkspacesPackages,
@@ -42,7 +43,19 @@ async function renderSharedGraph(rootPath, workspaces, options = {}) {
 
   sharedPkgs.sort((a, b) => b.size - a.size);
 
-  report(sharedPkgs);
+  if (options.json) {
+    const sharedObj = {};
+
+    for (const shared of sharedPkgs) {
+      sharedObj[shared.name] = shared;
+
+      delete shared.name;
+    }
+
+    toJson(sharedObj);
+  } else {
+    report(sharedPkgs);
+  }
 }
 
 function report(sharedPkgs) {
