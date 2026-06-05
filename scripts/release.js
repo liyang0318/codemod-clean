@@ -54,6 +54,10 @@ async function checkMainBranch() {
   return branch.trim() === "main";
 }
 
+async function build() {
+  await run("pnpm", ["build"]);
+}
+
 async function publish() {
   const isMainBranch = await checkMainBranch();
 
@@ -61,6 +65,10 @@ async function publish() {
     console.log(chalk.red("🔔 提示: 请在 main 分支上发布"));
     process.exit(1);
   }
+
+  console.log(chalk.cyan("🔔 提示: 正在构建..."));
+
+  await build();
 
   console.log(chalk.cyan("🔔 提示: 正在发布..."));
 
