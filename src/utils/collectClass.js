@@ -24,7 +24,7 @@ function collectTemplateClass(node, classes) {
     } else if (
       prop.type === nodeTypes.DIRECTIVE &&
       prop.name === "bind" &&
-      prop.arg.content === "class"
+      prop?.arg?.content === "class"
     ) {
       const content = prop.exp.content;
 
@@ -65,6 +65,7 @@ function getClassNamesBySelector(selector) {
 
   selectorParser((selectors) => {
     selectors.walkClasses((node) => {
+      console.log("node === ", node, node.value);
       classes.push(node.value);
     });
   }).processSync(selector);

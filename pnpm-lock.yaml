@@ -47,6 +47,12 @@ importers:
       postcss:
         specifier: ^8.5.15
         version: 8.5.15
+      postcss-less:
+        specifier: ^6.0.0
+        version: 6.0.0(postcss@8.5.15)
+      postcss-scss:
+        specifier: ^4.0.9
+        version: 4.0.9(postcss@8.5.15)
       postcss-selector-parser:
         specifier: ^7.1.1
         version: 7.1.1
@@ -815,6 +821,18 @@ packages:
   pify@3.0.0:
     resolution: {integrity: sha512-C3FsVNH1udSEX48gGX1xfvwTWfsYWj5U+8/uK15BGzIGrKoUpghX8hWZwa/OFnakBiiVNmBvemTJR5mcy7iPcg==}
     engines: {node: '>=4'}
+
+  postcss-less@6.0.0:
+    resolution: {integrity: sha512-FPX16mQLyEjLzEuuJtxA8X3ejDLNGGEG503d2YGZR5Ask1SpDN8KmZUMpzCvyalWRywAn1n1VOA5dcqfCLo5rg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      postcss: ^8.3.5
+
+  postcss-scss@4.0.9:
+    resolution: {integrity: sha512-AjKOeiwAitL/MXxQW2DliT28EKukvvbEWx3LBmJIRN8KfBGZbRTxNYW0kSqi1COiTZ57nZ9NW06S6ux//N1c9A==}
+    engines: {node: '>=12.0'}
+    peerDependencies:
+      postcss: ^8.4.29
 
   postcss-selector-parser@7.1.1:
     resolution: {integrity: sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg==}
@@ -1876,6 +1894,14 @@ snapshots:
   pify@2.3.0: {}
 
   pify@3.0.0: {}
+
+  postcss-less@6.0.0(postcss@8.5.15):
+    dependencies:
+      postcss: 8.5.15
+
+  postcss-scss@4.0.9(postcss@8.5.15):
+    dependencies:
+      postcss: 8.5.15
 
   postcss-selector-parser@7.1.1:
     dependencies:

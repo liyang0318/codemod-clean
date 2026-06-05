@@ -38,8 +38,8 @@ function validateOptions(options, type = "run") {
  * 获取文件路径的相对路径
  * @param {string} filePath
  */
-function getRelativePath(filePath) {
-  return path.relative(process.cwd(), filePath);
+function getRelativePath(filePath, rootPath = process.cwd()) {
+  return path.relative(rootPath, filePath);
 }
 
 /**
@@ -68,10 +68,15 @@ function formatBytes(bytes, decimals = 2) {
   );
 }
 
+function indent(num = 0) {
+  return "  ".repeat(num);
+}
+
 module.exports = {
   handleErrorExit,
   validateOptions,
   getRelativePath,
   formatDate,
   formatBytes,
+  indent,
 };

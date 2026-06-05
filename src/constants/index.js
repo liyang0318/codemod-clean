@@ -3,7 +3,10 @@ const MUTUALLY_EXCLUSIVE = [
   ["json", "stylish"],
 ];
 
-const ANALYZE_MUTUALLY_EXCLUSIVE = [["json", "tree"]];
+const ANALYZE_MUTUALLY_EXCLUSIVE = [
+  ["json", "tree"],
+  ["package", "deps", "shared"],
+];
 
 const SUPPORTED_EXTENSIONS = [".js", ".ts", ".vue"];
 const SUPPORTED_EXTENSIONS_PATTERN = "**/*.{js,ts,vue}";

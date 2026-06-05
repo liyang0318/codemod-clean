@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-require("module-alias/register");
+
+const path = require("path");
+const moduleAlias = require("module-alias");
+const packageJsonPath = path.join(__dirname, "..", "package.json");
+moduleAlias(packageJsonPath);
 
 const { Command } = require("commander");
 const pkg = require("../package.json");
@@ -18,7 +22,9 @@ program
   .option("--fix", "apply changes to files")
   .option("--stylish", "output human-readable format (default)")
   .option("--json", "output JSON format")
-  .description("analyze and clean the code")
+  .description(
+    "analyze and clean the code (options: --dry, --fix, --stylish, --json)",
+  )
   .action((target, options) => {
     validateOptions(options, "run");
 
@@ -30,7 +36,12 @@ program
   .argument("[target]")
   .option("--tree", "output tree format (default)")
   .option("--json", "output JSON format")
-  .description("analyze the project")
+  .option("--package", "package-level analysis (default)")
+  .option("--deps", "monorepo dependency graph analysis")
+  .option("--shared", "monorepo shared package analysis")
+  .description(
+    "analyze the project (options: --tree, --json, --package, --deps, --shared)",
+  )
   .action((target, options) => {
     validateOptions(options, "analyze");
 

@@ -1,4 +1,4 @@
-const postcss = require("postcss");
+const { parseStyle: parseStylePostcss } = require("@utils/parse.js");
 const { collectStyleClass } = require("@utils/collectClass.js");
 
 const REG = /v-bind\s*\(\s*['"]?([a-zA-Z_$][\w$]*)['"]?\s*\)/g;
@@ -11,12 +11,14 @@ function parseStyle(styles) {
     classes: new Set(),
   };
 
-  if (!styles || !styles.length) return blocks;
+  if (!styles?.length) return styleModule;
 
   for (const style of styles) {
     const classes = new Set();
 
-    const root = postcss.parse(style.content);
+    const { content, lang } = style;
+
+    const root = parseStylePostcss(content, lang);
 
     collectStyleClass(root, classes);
 

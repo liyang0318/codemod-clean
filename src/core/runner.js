@@ -7,8 +7,14 @@ const Reporter = require("./reporter.js");
 const scan = require("./scanner.js");
 const Ignore = require("@core/ignore.js");
 
+/**
+ * 运行工具
+ * @param {string} target - 目标路径
+ * @param {Object} mode - 模式对象
+ * @returns {Promise<void>}
+ */
 async function run(target, mode) {
-  const targetPath = target || "./";
+  const targetPath = target || ".";
 
   const ignore = new Ignore(targetPath);
 
