@@ -1,5 +1,5 @@
-const Reporter = require("@core/reporter.js");
-const { getClassNamesBySelector } = require("@utils/collectClass.js");
+const Reporter = require("../core/reporter.js");
+const { getClassNamesBySelector } = require("../utils/collectClass.js");
 
 /**
  * 移除未使用的类选择器

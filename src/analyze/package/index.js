@@ -2,8 +2,8 @@ const path = require("path");
 const renderDependenciesGraph = require("./render/dependency.js");
 const renderPackages = require("./render/packages.js");
 const renderSharedGraph = require("./render/shared.js");
-const { detectWorkspace } = require("@analyze/utils/index.js");
-const { handleErrorExit } = require("@utils/index.js");
+const { detectWorkspace } = require("../utils/index.js");
+const { handleErrorExit } = require("../../utils/index.js");
 
 async function packageAnalyzer(targetPath, options = {}) {
   const rootPath = path.resolve(targetPath);

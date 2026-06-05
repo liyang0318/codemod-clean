@@ -1,5 +1,5 @@
 const generate = require("@babel/generator").default;
-const { parseExpression } = require("@utils/parse.js");
+const { parseExpression } = require("../../utils/parse.js");
 /**
  * 将 AST 转换为 统一 block 对象格式
  * @param {Object} block
