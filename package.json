@@ -5,7 +5,6 @@
   "main": "./dist/cli.js",
   "scripts": {
     "dev": "node bin/cli.js",
-    "dev:prod": "node dist/cli.js",
     "preview": "node dist/cli.js",
     "build": "node scripts/build.js",
     "release": "node scripts/release.js",
