@@ -28,7 +28,7 @@ function toJson(targetPath, files) {
       if (current && current[MARKERS_KEY_MAP.type.markKey] === "directory") {
         if (isLast) {
           current[MARKERS_KEY_MAP.children.markKey].push(
-            getBaseItem(currentAbsolutePath),
+            getBaseItem(currentAbsolutePath, currentPath),
           );
         } else {
           const item = current[MARKERS_KEY_MAP.children.markKey].find(
@@ -36,14 +36,15 @@ function toJson(targetPath, files) {
           );
           if (!item) {
             current[MARKERS_KEY_MAP.children.markKey].push(
-              getBaseItem(currentAbsolutePath),
+              getBaseItem(currentAbsolutePath, currentPath),
             );
           }
 
           current = item;
         }
       } else {
-        current[part] = current[part] || getBaseItem(currentAbsolutePath);
+        current[part] =
+          current[part] || getBaseItem(currentAbsolutePath, currentPath);
         current = current[part];
       }
     });
@@ -123,13 +124,14 @@ const MARKERS_KEY_MAP = {
   },
 };
 
-function getBaseItem(currentPath) {
+function getBaseItem(currentPath, relativePath) {
   const stat = getStat(currentPath);
   const type = stat.isDirectory() ? "directory" : "file";
+
   const baseItem = {
     [MARKERS_KEY_MAP.name.markKey]: path.basename(currentPath),
     [MARKERS_KEY_MAP.type.markKey]: type,
-    [MARKERS_KEY_MAP.path.markKey]: currentPath,
+    [MARKERS_KEY_MAP.path.markKey]: relativePath,
     [MARKERS_KEY_MAP.size.markKey]: formatBytes(stat.size),
     [MARKERS_KEY_MAP.updateTime.markKey]: formatDate(stat.mtime),
     [MARKERS_KEY_MAP.createTime.markKey]: formatDate(stat.birthtime),
