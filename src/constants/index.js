@@ -5,7 +5,7 @@ const MUTUALLY_EXCLUSIVE = [
 
 const ANALYZE_MUTUALLY_EXCLUSIVE = [
   ["json", "tree"],
-  ["package", "deps", "shared"],
+  ["structure", "package", "deps", "shared"],
 ];
 
 const SUPPORTED_EXTENSIONS = [".js", ".ts", ".vue"];

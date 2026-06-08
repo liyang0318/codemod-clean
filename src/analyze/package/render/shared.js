@@ -1,4 +1,4 @@
-const { indent } = require("../../../utils/index.js");
+const { handleErrorExit, indent } = require("../../../utils/index.js");
 const chalk = require("chalk");
 const toJson = require("./toJson.js");
 const {
@@ -12,13 +12,30 @@ async function renderSharedGraph(rootPath, workspaces, options = {}) {
 
   const workspacesSet = getWorkspacesDeps(files);
 
+  const sharePackages =
+    Array.isArray(options.shared) && options.shared?.length
+      ? new Set(options.shared)
+      : null;
+
+  const filteredWorkspacesSet = sharePackages
+    ? new Set(
+        [...workspacesSet].filter((workspace) => sharePackages.has(workspace)),
+      )
+    : workspacesSet;
+
+  if (sharePackages && !filteredWorkspacesSet.size) {
+    handleErrorExit(
+      `No matching workspace packages found: ${options.shared.join(", ")}`,
+    );
+  }
+
   const sharedPkgs = [];
 
-  for (const workspace of workspacesSet) {
+  for (const workspace of filteredWorkspacesSet) {
     const shared = {
       name: workspace,
       size: 0,
-      pkgs: [],
+      usedBy: [],
     };
 
     files.forEach((file) => {
@@ -32,7 +49,7 @@ async function renderSharedGraph(rootPath, workspaces, options = {}) {
       ];
 
       if (deps.includes(workspace)) {
-        shared.pkgs.push(name);
+        shared.usedBy.push(name);
 
         shared.size++;
       }
@@ -67,7 +84,7 @@ function report(sharedPkgs) {
     if (shared.size) {
       console.log(`${indent(1)}used by:`);
 
-      shared.pkgs.forEach((name) => {
+      shared.usedBy.forEach((name) => {
         console.log(`${indent(2)}- ${chalk.cyan(name)}`);
       });
     } else {

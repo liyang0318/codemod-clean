@@ -25,6 +25,7 @@ function validateOptions(options, type = "run") {
     run: MUTUALLY_EXCLUSIVE,
     analyze: ANALYZE_MUTUALLY_EXCLUSIVE,
   };
+
   for (const group of mutuallyExclusive[type]) {
     const actives = group.filter((key) => options[key]);
 
