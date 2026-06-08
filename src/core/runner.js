@@ -5,7 +5,7 @@ const transform = require("../transform/index.js");
 const generator = require("../generator/index.js");
 const Reporter = require("./reporter.js");
 const scan = require("./scanner.js");
-const Ignore = require("@core/ignore.js");
+const Ignore = require("./ignore.js");
 
 /**
  * 运行工具

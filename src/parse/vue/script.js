@@ -1,5 +1,5 @@
 const { transformBlock } = require("../utils/index.js");
-const { parse } = require("@utils/parse.js");
+const { parse } = require("../../utils/parse.js");
 
 function parseScript({ script, scriptSetup }) {
   const blocks = [];

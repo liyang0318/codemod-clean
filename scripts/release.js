@@ -54,19 +54,32 @@ async function checkMainBranch() {
   return branch.trim() === "main";
 }
 
-async function publish() {
-  const isMainBranch = await checkMainBranch();
+async function build() {
+  await run("pnpm", ["build"]);
+}
 
-  if (!isMainBranch) {
-    console.log(chalk.red("🔔 提示: 请在 main 分支上发布"));
+async function publish() {
+  try {
+    const isMainBranch = await checkMainBranch();
+
+    if (!isMainBranch) {
+      console.log(chalk.red("🔔 提示: 请在 main 分支上发布"));
+      process.exit(1);
+    }
+
+    console.log(chalk.cyan("🔔 提示: 正在构建..."));
+
+    await build();
+
+    console.log(chalk.cyan("🔔 提示: 正在发布..."));
+
+    await run("npm", ["publish"]);
+
+    console.log(chalk.green("🚀 提示: 发布完成！"));
+  } catch (error) {
+    console.log(chalk.red("❌ 提示: 发布失败"));
     process.exit(1);
   }
-
-  console.log(chalk.cyan("🔔 提示: 正在发布..."));
-
-  await run("npm", ["publish"]);
-
-  console.log(chalk.green("🚀 提示: 发布完成！"));
 }
 
 async function publishAheadVersion() {

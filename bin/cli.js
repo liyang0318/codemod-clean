@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 
-const path = require("path");
-const moduleAlias = require("module-alias");
-const packageJsonPath = path.join(__dirname, "..", "package.json");
-moduleAlias(packageJsonPath);
-
 const { Command } = require("commander");
 const pkg = require("../package.json");
-const run = require("@core/runner.js");
-const analyze = require("@core/analyzer.js");
-const { validateOptions } = require("@utils/index.js");
+const run = require("../src/core/runner.js");
+const analyze = require("../src/core/analyzer.js");
+const { validateOptions } = require("../src/utils/index.js");
 
 const program = new Command();
 

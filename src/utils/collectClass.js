@@ -1,6 +1,6 @@
 const compiler = require("@vue/compiler-dom");
 const selectorParser = require("postcss-selector-parser");
-const { parseExpression } = require("@utils/parse.js");
+const { parseExpression } = require("./parse.js");
 
 const nodeTypes = compiler.NodeTypes;
 

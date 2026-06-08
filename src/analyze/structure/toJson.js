@@ -1,7 +1,11 @@
 const path = require("path");
 const chalk = require("chalk");
-const { getStat } = require("@analyze/utils/index.js");
-const { formatDate, formatBytes, getRelativePath } = require("@utils/index.js");
+const { getStat } = require("../utils/index.js");
+const {
+  formatDate,
+  formatBytes,
+  getRelativePath,
+} = require("../../utils/index.js");
 
 function toJson(targetPath, files) {
   const fileTree = {};

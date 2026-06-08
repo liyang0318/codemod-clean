@@ -1,41 +1,48 @@
 {
   "name": "codemod-clean",
-  "version": "2.4.1",
-  "description": "A codemod tool to clean up console and unused variables and unused imports in JavaScript code.",
-  "main": "./bin/cli.js",
-  "_moduleAliases": {
-    "@": "./src",
-    "@core": "./src/core",
-    "@utils": "./src/utils",
-    "@constants": "./src/constants",
-    "@analyze": "./src/analyze"
-  },
+  "version": "2.4.2",
+  "description": "Monorepo-aware static analysis and codemod engine for JavaScript/TypeScript/Vue. Detect unused code, optimize imports, analyze dependency graphs, and identify architectural hotspots across packages.",
+  "main": "./dist/cli.js",
   "scripts": {
-    "version:patch": "standard-version --release-as patch --skip.tag",
-    "version:minor": "standard-version --release-as minor --skip.tag",
-    "version:major": "standard-version --release-as major --skip.tag",
+    "dev": "node bin/cli.js",
+    "preview": "node dist/cli.js",
+    "build": "node scripts/build.js",
     "release": "node scripts/release.js",
     "release:version": "node scripts/release.js --version-only",
     "release:publish": "node scripts/release.js --publish-only",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "codemod-clean": "./bin/cli.js"
+    "codemod-clean": "./dist/cli.js"
   },
   "files": [
-    "bin",
-    "src",
+    "dist",
     "package.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "codemod",
-    "clean",
-    "console",
-    "unused-variables",
+    "monorepo",
+    "static-analysis",
+    "dependency-graph",
+    "unused-code",
     "unused-imports",
+    "unused-variables",
+    "unused-packages",
+    "console-cleanup",
+    "code-cleanup",
+    "refactoring",
     "ast",
-    "babel"
+    "babel",
+    "vue",
+    "typescript",
+    "javascript",
+    "shared-packages",
+    "architecture-analysis",
+    "coupling-detection",
+    "orphan-detection",
+    "import-optimization"
   ],
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
@@ -50,7 +57,6 @@
     "dayjs": "^1.11.21",
     "fs-extra": "^11.3.5",
     "globby": "^16.2.0",
-    "module-alias": "^2.3.4",
     "postcss": "^8.5.15",
     "postcss-less": "^6.0.0",
     "postcss-scss": "^4.0.9",
@@ -58,10 +64,10 @@
     "treeify": "^1.1.0"
   },
   "devDependencies": {
+    "esbuild": "^0.28.0",
     "execa": "^9.6.1",
     "prompts": "^2.4.2",
-    "semver": "^7.8.1",
-    "standard-version": "^9.5.0"
+    "semver": "^7.8.1"
   },
   "publishConfig": {
     "access": "public",
