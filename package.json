@@ -1,6 +1,6 @@
 {
   "name": "codemod-clean",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Monorepo-aware static analysis and codemod engine for JavaScript/TypeScript/Vue. Detect unused code, optimize imports, analyze dependency graphs, and identify architectural hotspots across packages.",
   "main": "./dist/cli.js",
   "scripts": {
