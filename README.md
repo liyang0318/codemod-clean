@@ -99,51 +99,39 @@ codemod-clean tells you:
 
 ## 📦 Installation
 
+```bash
 npm install -g codemod-clean
+```
 
 ---
 
 ## 🚀 Usage
 
-### 1. Analyze project structure
-
+```bash
+# 1.Analyze project structure （default --tree）
 codemod-clean analyze
 
----
+# 2.Show project json output
+codemod-clean analyze --json
 
-### 2. Show project tree
+# 3.Package analysis
+codemod-clean analyze --package
 
-codemod-clean analyze --tree
-
----
-
-### 3. Dependency graph analysis
-
+# 4.Dependency graph analysis
 codemod-clean analyze --deps
 
----
-
-### 4. Shared packages analysis
-
+# 5.Shared packages analysis
 codemod-clean analyze --shared
 
----
-
-### 5. Clean code (dry-run by default)
-
+# 6.Clean code (dry-run by default)
 codemod-clean run ./src
 
----
-
-### 6. Apply fixes
-
+# 7.Apply fixes
 codemod-clean run ./src --fix
 
----
-
-### 7. JSON output (CI usage)
-
+# 8.JSON output (CI usage)
 codemod-clean analyze --json --shared
+```
 
 ---
 
