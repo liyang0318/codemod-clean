@@ -13,12 +13,12 @@ program.name("codemod-clean").version(pkg.version);
 program
   .command("run")
   .argument("[target]")
-  .option("--dry", "preview without writing files (default)")
-  .option("--fix", "apply changes to files")
-  .option("--stylish", "output human-readable format (default)")
-  .option("--json", "output JSON format")
+  .option("--dry", "scan and report issues without modifying files (default)")
+  .option("--fix", "apply safe code cleanup fixes")
+  .option("--stylish", "output a human-readable report (default)")
+  .option("--json", "output cleanup report as JSON")
   .description(
-    "analyze and clean the code (options: --dry, --fix, --stylish, --json)",
+    "scan JavaScript, TypeScript, and Vue files for cleanup opportunities",
   )
   .action((target, options) => {
     validateOptions(options, "run");
@@ -29,13 +29,17 @@ program
 program
   .command("analyze")
   .argument("[target]")
-  .option("--tree", "output tree format (default)")
-  .option("--json", "output JSON format")
-  .option("--package", "package-level analysis (default)")
-  .option("--deps", "monorepo dependency graph analysis")
-  .option("--shared", "monorepo shared package analysis")
+  .option("--tree", "output project tree structure (default)")
+  .option("--json", "output project analysis as JSON")
+  .option("--structure", "analyze project file structure (default)")
+  .option("--package", "analyze workspace packages")
+  .option("--deps", "analyze workspace dependency graph")
+  .option(
+    "--shared [package...]",
+    "analyze shared workspace packages; optionally filter by package name",
+  )
   .description(
-    "analyze the project (options: --tree, --json, --package, --deps, --shared)",
+    "analyze project structure, packages, workspace dependencies, and shared package usage",
   )
   .action((target, options) => {
     validateOptions(options, "analyze");
