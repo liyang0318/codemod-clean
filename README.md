@@ -53,6 +53,9 @@ test1
 
 ## 📊 Example Output
 
+test2
+test2
+
 ```text
 @packages/eslint-config-custom (5)
   used by:
