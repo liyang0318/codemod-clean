@@ -50,7 +50,13 @@ codemod-clean tells you:
 
 ---
 
+test1
+test1
+
 ## 📊 Example Output
+
+test2
+test2
 
 ```text
 @packages/eslint-config-custom (5)
