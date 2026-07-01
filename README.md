@@ -48,6 +48,9 @@ codemod-clean tells you:
 
 ---
 
+test1
+test1
+
 ## 📊 Example Output
 
 ```text
